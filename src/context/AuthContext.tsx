@@ -1,16 +1,15 @@
-import React, { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import { setToken, setUser, getToken, getUser, removeToken, removeUser } from "../api/token";
-//import { useUser } from "../hooks";
 
 export const AuthContext = createContext({
-     auth: null,
+     auth: undefined,
      login: (token: string, user: {}) => {},
     logout: () => console.log('cerrando sesion')
 });
 
 export function AuthProvider(props:any) {
   const { children } = props;
-  const [auth, setAuth] = useState<any | null>(null);
+  const [auth, setAuth] = useState<any | undefined>(undefined);
   
   useEffect(() => {
     (async () => {

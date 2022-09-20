@@ -1,4 +1,3 @@
-import React, {useState} from 'react'
 import { API_URL } from "../utils/constants";
 import { toast } from "react-toastify";
 import { Group } from '../types';
@@ -50,13 +49,11 @@ export async function editGroupApi(id:Group, data:Group, token: any){
       },
       body: JSON.stringify(data),
     };
-
     const response = await fetch(url, params);
     const result = await response.json();
     return result;
   } catch (error) {
     console.log(error);
-    
     throw error;
   }
 
@@ -71,7 +68,6 @@ export async function deleteGroupApi(id:Group, token:any) {
         Authorization: `${token.token}`,
       },
     };
-
     const response = await fetch(url, params);
     const result = await response.json();
     return result;
@@ -79,8 +75,6 @@ export async function deleteGroupApi(id:Group, token:any) {
     throw error;
   }
 }
-
-
 
 export async function compareObjects (data:any, token: any, id:any){
   const response = await getGroupsApi(token);
@@ -97,7 +91,9 @@ export async function compareObjects (data:any, token: any, id:any){
     }else{
       addGroupApi(data, token);
     }
-  }else if (exist === true){
+  }else if (exist === true && id ){
+    editGroupApi(id, data, token);
+  }else {
     toast(`El grupo ya existe`);
   }
 }
