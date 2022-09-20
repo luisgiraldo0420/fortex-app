@@ -56,3 +56,29 @@ export async function deletePersonApi(data:Group, id:Person, token:any) {
       throw error;
     }
   }
+
+  export async function assignRoleApi(dataOld:any, newValues:any, token:any ){
+
+    let oldValues = dataOld.roles.map((role:Person) =>  role.id)
+    const groupId = dataOld.id
+   
+
+    try {
+      const url = `${API_URL}group/manage-roles`;
+      const params = {
+        method: "POST",
+        headers: {
+          Authorization: `${token.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({groupId, oldValues, newValues}),
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  
+    
+  }
