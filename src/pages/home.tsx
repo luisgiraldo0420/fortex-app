@@ -20,11 +20,8 @@ export default function Home() {
 
   useEffect(() => {
     getGroups();
-    
-  }, [refresh]);
-  console.log(groups);
+  }, [refresh]);  
   
-
   const openCloseModal = () =>{ setShowModal((prev) => !prev)};
   const onrefresh = () => setRefresh((prev) =>  !prev);
 

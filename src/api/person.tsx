@@ -47,9 +47,7 @@ export async function deletePersonApi(data:Group, id:Person, token:any) {
         },
         body: JSON.stringify({groupId, oldValues, newValues}),
       };
-      const response = await fetch(url, params);
-      console.log(params);
-      
+      const response = await fetch(url, params);      
       const result = await response.json();
       return result;
     } catch (error) {

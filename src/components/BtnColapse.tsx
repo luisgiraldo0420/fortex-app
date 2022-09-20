@@ -24,8 +24,6 @@ const [open, setOpen] = useState<any | null>(null);
 
 const {updateGroup, onDeleteGroup, postGroup, postPoles, addRol, addPerson} = config   
 
-console.log(addPerson, 'props------', config);
-
   return (
     <>
     <TableRow key={row.id}>
