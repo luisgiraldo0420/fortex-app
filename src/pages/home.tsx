@@ -72,7 +72,7 @@ const addRol = (group:Group ) => {
   setContentModal(<AddDelRol onClose={openCloseModal} onrefresh={onrefresh} group={group} flat="roles"/>)
   openCloseModal()
 }
-const addPerson = (group:Group ) => {
+const addPerson = (group:Group ) => { 
   setTitleModal("Assign peoples");
   setContentModal(<AddDelRol onClose={openCloseModal} onrefresh={onrefresh} group={group} flat="peoples"/>)
   openCloseModal()
