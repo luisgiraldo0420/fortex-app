@@ -1,9 +1,15 @@
+import { map } from "lodash";
 import { Group, Person } from "../types";
 import { API_URL } from "../utils/constants";
 
-export async function deletePersonApi(data:Group, newValues:Person, token:any) {
+export async function deletePersonApi(data:Group, id:Person, token:any) {
     const {id:groupId, people} = data;    
-    let oldValues = people.map((person:Person) =>  person.id)
+
+  let oldValues =  map(people.filter((person:Person) => person.active)).map((person:Person) =>  person.id)
+
+  let newValues = oldValues.filter((personId:any) => personId !== id )
+
+
     try {
       const url = `${API_URL}group/manage-members`;
       const params = {
@@ -22,11 +28,15 @@ export async function deletePersonApi(data:Group, newValues:Person, token:any) {
     }
   }
 
-  export async function deleteRoleApi(data:Group, newValues:Person, token:any) {
+  export async function deleteRoleApi(data:Group, id:Person, token:any) {
     
     const {id:groupId, roles} = data;
-    
-    let oldValues = roles.map((role:Person) =>  role.id)
+  
+  
+  let oldValues =  map(roles.filter((rol:Person) => rol.active)).map((role:Person) =>  role.id)
+
+  let newValues = oldValues.filter((roleId:any) => roleId !== id )
+      
     try {
       const url = `${API_URL}group/manage-roles`;
       const params = {
@@ -38,6 +48,8 @@ export async function deletePersonApi(data:Group, newValues:Person, token:any) {
         body: JSON.stringify({groupId, oldValues, newValues}),
       };
       const response = await fetch(url, params);
+      console.log(params);
+      
       const result = await response.json();
       return result;
     } catch (error) {

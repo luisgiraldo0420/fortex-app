@@ -20,7 +20,10 @@ export default function Home() {
 
   useEffect(() => {
     getGroups();
+    
   }, [refresh]);
+  console.log(groups);
+  
 
   const openCloseModal = () =>{ setShowModal((prev) => !prev)};
   const onrefresh = () => setRefresh((prev) =>  !prev);
@@ -95,3 +98,30 @@ const postPoles =(data:Group, person:Person)=>{
    </Container>
   );
 }
+
+/* 
+
+0
+: 
+{id: 'f97e2ea9-4556-415d-bbe5-7987d6f22fc1', name: 'Default', active: false}
+1
+: 
+{id: '46745a7e-4a91-4370-86eb-39b615150e01', name: 'Executive', active: false}
+2
+: 
+{id: 'ac801f1d-b9ad-4aa4-b185-81ab12be1741', name: 'Supervisor', active: false}
+3
+: 
+{id: 'b1d3d930-9336-40d7-99e8-79abb25f85c1', name: 'Project manager', active: false}
+4
+: 
+{id: 'a39ef3b3-1917-4303-ab41-814a186a1d42', name: 'Marketing manager', active: false}
+5
+: 
+{id: '8988138c-9c5b-40fe-b99a-f408e3a90834', name: 'Finance manager', active: false}
+6
+: 
+{id: 'c1a0fb23-e7fa-40e7-8c89-6cf8578b851b', name: 'Human resources', active: false}
+length
+: 
+7 */

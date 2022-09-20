@@ -104,7 +104,7 @@ export default function GroupsTable(props: any) {
                         </TableRow>
                     </TableHead>
                         <TableBody>
-                            {map(row.people, (p:any) => (
+                        {map(row.people.filter((p:any) => p.active), (p:any) => (
                                 <TableRow key={p.id}>
                                      <TableCell align="left">{p.name}</TableCell>
                                      <TableCell align="left">{p.active}</TableCell>
@@ -135,7 +135,7 @@ export default function GroupsTable(props: any) {
                         </TableRow>
                     </TableHead>
                         <TableBody>
-                            {map(row.roles, (r:any) => (
+                            {map(row.roles.filter((r:any) => r.active), (r:any) => (
                                 <TableRow key={r.id} >
                                      <TableCell align="left">{r.name}</TableCell>
                                      <TableCell align="left">{r.active}</TableCell>
