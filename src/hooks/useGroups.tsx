@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { compareObjects, getGroupsApi, deleteGroupApi } from "../api/groups";
-import {deletePersonApi, deleteRoleApi, assignRoleApi} from '../api/person';
+import {deletePersonApi, deleteRoleApi, assignRoleApi, assignPersonApi} from '../api/person';
 import { useAuth } from "./useAuth";
 
 export function useGroups() {
@@ -94,6 +94,17 @@ const assignRole = async  (dataOld:any, dataNew:any ) =>{
     setError(error);
   }
 }
+const assignPerson = async  (dataOld:any, dataNew:any ) =>{
+  try {
+     setLoading(true);
+    if(auth != null){
+      assignPersonApi(dataOld, dataNew, auth);
+    }
+  } catch (error) {
+    setLoading(false);
+    setError(error);
+  }
+}
   
   
     return {
@@ -106,6 +117,7 @@ const assignRole = async  (dataOld:any, dataNew:any ) =>{
         deleteGroup,
         deletePerson,
         deleteRole,
-        assignRole
+        assignRole,
+        assignPerson
     }
 }

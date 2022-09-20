@@ -21,8 +21,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { map } from 'lodash';
 import { useState } from 'react';
-import { Group } from '../types';
-import AddDelRol from './rolesAndPerson/AddDelRol';
+
 
 const useStyles = makeStyles({
   table: {
@@ -45,7 +44,7 @@ export default function GroupsTable(props: any) {
     const classes = useStyles();
     const [open, setOpen] = useState<any | null>(null);
 
-       const {group, updateGroup, onDeleteGroup, postGroup, postPoles, addRol} = props       
+       const {group, updateGroup, onDeleteGroup, postGroup, postPoles, addRol, addPerson} = props       
         
   return (
     <TableContainer component={Paper}>
@@ -93,6 +92,7 @@ export default function GroupsTable(props: any) {
                     People 
                     </Typography>
                     <Button
+                        onClick={() => addPerson(row)}
                         color="secondary"
                         startIcon={<AddIcon />}>
                     </Button> 

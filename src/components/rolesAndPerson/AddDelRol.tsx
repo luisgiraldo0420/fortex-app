@@ -60,9 +60,9 @@ const ITEM_HEIGHT = 48;
       }
 
 export default function AddDelRol(props: any) {
-    const {assignRole} = useGroups();
+    const {assignRole, assignPerson} = useGroups();
     const classes = useStyles();
-    const {onClose, onrefresh, group} = props;
+    const {onClose, onrefresh, group, flat} = props;
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
     const [BuildData, setBuildData] =   React.useState<string[]>([]);        
@@ -73,18 +73,26 @@ export default function AddDelRol(props: any) {
         setBuildData(prev => [...prev, dataSelected[1]]);
     };
 
+
     const sendData = () => {
         if(BuildData){
-            assignRole(group, BuildData)
-            onrefresh()
-            onClose();
+            if(flat === 'roles'){
+                assignRole(group, BuildData)
+                onrefresh()
+                onClose();
+            }else if(flat === 'peoples'){
+                assignPerson(group, BuildData)
+                onrefresh()
+                onClose();
+            }
+           
         }
     }
   return (
    
        <form>
          <FormControl className={classes.formControl}>
-        <InputLabel id="demo-mutiple-chip-label">Roles</InputLabel>
+        <InputLabel id="demo-mutiple-chip-label">{flat}</InputLabel>
         <Select
           labelId="demo-mutiple-chip-label"
           id="demo-mutiple-chip"
@@ -101,11 +109,22 @@ export default function AddDelRol(props: any) {
           )}
           MenuProps={MenuProps}
         >
-          {group.roles.map((rol:any) => (
-            <MenuItem key={rol.id} value={[rol.name, rol.id]} style={getStyles(rol.name, personName, theme)}>
-              {rol.name}
-            </MenuItem>
-          ))}
+         {
+            flat === 'roles' ? (
+                group.roles.map((rol:any) => (
+                    <MenuItem key={rol.id} value={[rol.name, rol.id]} style={getStyles(rol.name, personName, theme)}>
+                      {!rol.active ? rol.name : ''}
+                    </MenuItem>
+                  ))
+            ):
+            (
+                group.people.map((person:any) => (
+                    <MenuItem key={person.id} value={[person.name, person.id]} style={getStyles(person.name, personName, theme)}>
+                      {!person.active ? person.name : ''}
+                    </MenuItem>
+                  ))
+            )
+         }
         </Select>
       </FormControl>
       <Button 
@@ -114,7 +133,7 @@ export default function AddDelRol(props: any) {
       id='crear'
       onClick={() => sendData()}
       >
-       Create
+       Assign
       </Button>
     </form>
   )

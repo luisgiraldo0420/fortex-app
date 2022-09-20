@@ -79,6 +79,27 @@ export async function deletePersonApi(data:Group, id:Person, token:any) {
     } catch (error) {
       throw error;
     }
-  
-    
+  }
+  export async function assignPersonApi(dataOld:any, newValues:any, token:any ){
+
+    let oldValues = dataOld.people.map((person:Person) =>  person.id)
+    const groupId = dataOld.id
+   
+
+    try {
+      const url = `${API_URL}group/manage-members`;
+      const params = {
+        method: "POST",
+        headers: {
+          Authorization: `${token.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({groupId, oldValues, newValues}),
+      };
+      const response = await fetch(url, params);
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }

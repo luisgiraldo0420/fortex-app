@@ -8,8 +8,7 @@ import {BasicModal} from '../components/Common';
 import { AddEditGroups } from '../components/groups';
 import Swal from 'sweetalert2';
 import { Group, Person } from '../types';
-import AddDelRol from '../components/rolesAndPerson/AddDelRol';
- 
+import AddDelRol from '../components/rolesAndPerson/AddDelRol'; 
 
 
 export default function Home() {
@@ -69,8 +68,13 @@ const postPoles =(data:Group, person:Person)=>{
   onrefresh();
 }
 const addRol = (group:Group ) => {
-  setTitleModal("New group");
-  setContentModal(<AddDelRol onClose={openCloseModal} onrefresh={onrefresh} group={group} />)
+  setTitleModal("Assingn Roles");
+  setContentModal(<AddDelRol onClose={openCloseModal} onrefresh={onrefresh} group={group} flat="roles"/>)
+  openCloseModal()
+}
+const addPerson = (group:Group ) => {
+  setTitleModal("Assign peoples");
+  setContentModal(<AddDelRol onClose={openCloseModal} onrefresh={onrefresh} group={group} flat="peoples"/>)
   openCloseModal()
 }
 
@@ -95,6 +99,7 @@ const addRol = (group:Group ) => {
        postGroup={postGroup}
        postPoles={postPoles}
        addRol={addRol}
+       addPerson={addPerson}
        />
        ) }
        <BasicModal 
