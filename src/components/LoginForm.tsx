@@ -1,11 +1,12 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { FormControl, Input, InputLabel, Button, Grid } from '@material-ui/core';
+import { FormControl, InputLabel, Button, Grid, Input } from '@material-ui/core';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { loginApi } from '../api/user';
 import { toast } from "react-toastify";
 import { useAuth } from '../hooks/useAuth';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
 export default function LoginForm() {
     const {login} = useAuth();
     const classes = useStyles();
-  
-
     const [error, setError] =  React.useState<any | null>(null);
+
+    
 
     /**Estructura de formik */
     const formik = useFormik({
@@ -39,17 +40,13 @@ export default function LoginForm() {
                 const response = await loginApi(formValue);
                 const { token, user } = response;                
                 login(token, user)
+                toast.success('login success')
               } catch (error:any) {
                 toast.error(error.message);
-                if (error.code === "auth/wrong-password") {
-                  setError("Ups... contraseña errada ");
-                }
-                if (error.code === "auth/user-not-found") {
-                  setError("Ups... email invalido ");
-                }
               } 
         },
       });
+
     
   return (
     <form className={classes.root} onSubmit={formik.handleSubmit}>
@@ -61,6 +58,7 @@ export default function LoginForm() {
                         name='email'
                         value={formik.values.email}
                         onChange={formik.handleChange}
+                        error={formik.errors.email ? true : false}
                         
                         />
                     </FormControl>
@@ -74,6 +72,7 @@ export default function LoginForm() {
                         name='password' 
                         value={formik.values.password}
                         onChange={formik.handleChange}
+                        error={formik.errors.password ? true : false}
                         />
                     </FormControl>
                 </Grid>
@@ -98,6 +97,6 @@ function intialValues() {
   function validationSchema() {
     return {
         email: Yup.string().email().required(),
-      password: Yup.string().required('error'),
+        password: Yup.string().required(),
   }
 }
